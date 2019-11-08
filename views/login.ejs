@@ -1,0 +1,78 @@
+<html>
+ 
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="description" content="Login - Register Template">
+    <meta name="author" content="Lorenzo Angelino aka MrLolok">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/style4.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+
+    *{
+        margin:0; padding:0; font-family: 'Josefin Sans', sans-serif;
+    }
+     body {
+        background-image: url('/image/images.jpg');
+         background-repeat: no-repeat;
+
+        }
+    </style>
+</head>
+
+<body>
+    <% include header.ejs %>
+<div id="container-login">
+        <div id="title">
+            <i class="material-icons lock">lock</i> Login
+        </div>
+        <% include ./partials/messages.ejs %>
+        <form method="POST" action="/meet/login"> 
+            <div class="input">
+                <!-- <div class="input-addon"> -->
+                    <i class="material-icons">face</i>
+                <!-- </div> -->
+                <input  placeholder="email" name="email" type="text" required class="validate" autocomplete="off">
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="input">
+                <!-- <div class="input-addon"> -->
+                    <i class="material-icons">vpn_key</i>
+                <!-- </div> -->
+                <input placeholder="Password" type="password" name="password" required class="validate" autocomplete="off">
+            </div>
+
+           <div class="input" >
+            <input type="submit"   value="Log In" />
+           </div>
+        </form>
+    </div>
+
+<section>
+  <div class="footer">
+  <div class="footer-content">
+    <div class="footer-section about"></div>
+    <div class="footer-section link"></div>
+    <div class="footer-section content-forms"></div>
+  </div>
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+  <% include footer.ejs %>
+
+</body>
+
+</html>

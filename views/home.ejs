@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+        
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <a class="navbar-brand" href="#"></a>
+        <img src="/image/logo.png" alt="Logo" style="width:70px;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				  <span class="navbar-toggler-icon"></span>
+				</button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/meet/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/meet/status/<%=user.id%>">Status <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/meet/list/<%=user.id%>">Appointment<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
+                </li>
+
+        </div>
+    </nav>
+
+    <!-- Carousel Part start -->
+
+
+    <div id="demo" class="carousel slide" data-ride="carousel">
+        <ul class="carousel-indicators">
+            <li data-target="#demo" data-slide-to="0" class="active"></li>
+            <li data-target="#demo" data-slide-to="1"></li>
+            <li data-target="#demo" data-slide-to="2"></li>
+        </ul>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/image/img2.jpg" alt="Los Angeles" width="1100" height="500">
+                <div class="carousel-caption">
+                    <h1 class="text-success"><strong>Dr-meet</strong></h1>
+                    <h2 class="text-danger"><strong>We Specialize In Patient Care.!</strong></h2>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="/image/img1.jpg" alt="Chicago" width="1100" height="500">
+                <div class="carousel-caption">
+                    <h1 class="text-success"><strong>Dr-meet</strong></h1>
+                    <h2 class="text-danger"><strong>We Take Your Health Seriously.!</strong></h2>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="/image/img3.png" alt="New York" width="1100" height="500">
+                <div class="carousel-caption">
+                    <h1 class="text-success"><strong>Dr-meet</strong></h1>
+                    <h2 class="text-danger"><strong>Changing and Growing With You.!</strong></h2>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#demo" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    </div>
+
+    <!-- About US start -->
+    <section>
+        <div class="container-fluid">
+            <h1 class="text-center text-capitalize pt-5"><strong>Abhout US</strong></h1>
+            <hr class="w-25 mx-auto pt-5">
+
+            <div class="row mb-5">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <img src="/image/aaa.jpg" class="img-fluid">
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <h1>Easy Doctor Booking, now at your fingertips!<br></h1>
+                    <p>
+                        Booking doctor appointments has never been as easy as it is on Dr-Meet.<br> That's one less worry when you need medical attention. With Dr-Meet, you can now focus on getting well faster.
+                    </p><br>
+                    <h1>
+                        Doctors! Make it easier for patients to reach you
+                    </h1>
+                    <p>Patients are looking at ways to connect with doctors, faster and easier. Join us and help them find you faster on Dr-Meet.</p>
+                    <!-- <button class="btn bg-primary text-light" >Register Now</button> -->
+
+                </div>
+
+            </div>
+    </section>
+
+    <!-- About Us end -->
+
+
+    <section>
+
+        <div class="container">
+            <h1 class="text-center text-capitalize pt-5">OUR BEST DOCTORS</h1>
+            <hr class="w-25 mx-auto pt-5">
+
+
+
+            <div class="row text-center mb-4">
+                <div class="col-lg-3 col-md-3 col-12">
+
+                    <div class="card" style="width:250px">
+                        <img class="card-img-top" src="/image/doc1.jpg" alt="Card image">
+                        <div class="card-body">
+                            <h4 class="card-title">Dr. Devi Prasad Shetty</h4>
+                            <p class="card-text">Surgeon</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-12">
+
+                    <div class="card" style="width:250px">
+                        <img class="card-img-top" src="/image/doc2.png" alt="Card image">
+                        <div class="card-body">
+                            <h4 class="card-title">Dr. Sapna Chaudhari</h4>
+                            <p class="card-text">Gynaecologist</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-12">
+
+                    <div class="card" style="width:250px">
+                        <img class="card-img-top" src="/image/doc3.jpg" alt="Card image">
+                        <div class="card-body">
+                            <h4 class="card-title">Dr. Peeyoosh</h4>
+                            <p class="card-text">Neonatologist</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-12">
+
+                    <div class="card" style="width:250px">
+                        <img class="card-img-top" src="/image/doc4.jpg" alt="Card image">
+                        <div class="card-body">
+                            <h4 class="card-title">Dr. Krishnan A S</h4>
+                            <p class="card-text">General Medicine</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+
+
+    <!-- Footer -->
+
+
+    <!-- GAlery -->
+    <section>
+        <div class="container">
+            <h1 class="text-center text-capitalize pt-5"><strong>Hospitals</strong></h1>
+            <hr class="w-25 mx-auto pt-5">
+            <div class="row">
+                <div class="col-md-4 col-sm-2 col-12 mb-3">
+                    <img src="/image/hos1.jpg" class="img-fluid">
+                </div>
+
+                <div class="col-md-4 col-sm-2 col-12 mb-3">
+                    <img src="/image/hos2.jpg" class="img-fluid">
+                </div>
+                <div class="col-md-4 col-sm-2 col-12 mb-3">
+                    <img src="/image/hos3.jpg" class="img-fluid">
+                </div>
+                <div class="col-md-4 col-sm-2 col-12 mb-3">
+                    <img src="/image/hos4.jpg" class="img-fluid">
+                </div>
+                <div class="col-md-4 col-sm-2 col-12 mb-3">
+                    <img src="/image/hos5.jpg" class="img-fluid">
+                </div>
+                <div class="col-md-4 col-sm-2 col-12 mb-3">
+                    <img src="/image/hos6.jpg" class="img-fluid">
+                </div>
+
+            </div>
+    </section>
+    <!--gallery end  -->
+    <!-- REgiater closed -->
+    <section>
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-section about"></div>
+                <div class="footer-section link"></div>
+                <div class="footer-section content-forms"></div>
+            </div>
+    </section>
+
+
+    <footer class="footer-distributed">
+
+        <div class="footer-left">
+            <img src="/image/logo.png">
+            <h3>Dr<span>-Meet</span></h3>
+
+            <p class="footer-links">
+                <a href="#">Home</a> |
+                <a href="#">Servises</a> |
+                <a href="#">About</a> |
+                <a href="#">Contact</a>
+            </p>
+
+            <p class="footer-company-name">© 2019 School Of Engineering.</p>
+        </div>
+
+        <div class="footer-center">
+            <div>
+                <i class="fa fa-map-marker"></i>
+                <p><span>A4 Near Opal Homes,
+             Kalamassery,CUSAT</span> Ernakulam -Kochi-682022</p>
+            </div>
+
+            <div>
+                <i class="fa fa-phone"></i>
+                <p>+91 9113103732</p>
+            </div>
+            <div>
+                <i class="fa fa-envelope"></i>
+                <p><a href="mailto:support@eduonix.com">Drmeet@gmail.com</a></p>
+            </div>
+        </div>
+        <div class="footer-right">
+            <p class="footer-company-about">
+                <span>Appointment booking Website
+</span> Book an appointment in just a heart beat!.</p>
+        </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <section class="container">
+
+
+
+
+</body>
+
+</html>

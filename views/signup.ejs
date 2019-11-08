@@ -1,0 +1,83 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <meta name="description" content="Login - Register Template">
+    <meta name="author" content="Lorenzo Angelino aka MrLolok">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/style4.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+        
+        body {
+            background-image: url('/image/images1.jpg');
+            background-repeat: no-repeat;
+            background-size: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <% include header.ejs %>
+
+        <div id="container-register" align="center">
+            <div id="title">
+                <i class="material-icons lock">lock</i> Register
+            </div>
+            <% include ./partials/messages.ejs %>
+                <form method="POST" action="/meet/signup">
+                    <div class="input">
+                        <!-- <div class="input-addon"> -->
+                        <i class="material-icons">email</i>
+                        <!-- </div> -->
+                        <input placeholder="Email" type="email" name="email" required class="validate" autocomplete="on">
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="input">
+                        <i class="material-icons">vpn_key</i>
+                        <input placeholder="password" name="password" type="password" required class="validate" autocomplete="off">
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="input">
+                        <!-- <div class="input-addon"> -->
+                        <i class="material-icons">vpn_key</i>
+                        <!-- </div> -->
+                        <input placeholder="confirm password" name="cpassword" type="password" required class="validate" autocomplete="off">
+                    </div>
+                    <br>
+                    <input type="submit" value="Register" />
+                </form>
+        </div>
+
+        <!--footer work here-->
+
+        <% include footer.ejs %>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+            <section class="container">
+
+</body>
+
+</html>

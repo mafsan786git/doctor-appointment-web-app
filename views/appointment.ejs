@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style3.css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<title>Patient Details</title>
+  <style>
+    *{
+      margin:0; padding:0; font-family: 'Josefin Sans', sans-serif;
+    }
+        body {font-family: Arial, Helvetica, sans-serif;}
+        * {box-sizing: border-box;}
+        #center
+        {
+             text-align:center;
+        }
+        
+        input[type=text], select, textarea {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+          margin-top: 6px;
+          margin-bottom: 16px;
+          resize: vertical;
+        }
+        
+        input[type=submit] {
+          background-color: #4CAF50;
+          color: white;
+          padding: 12px 20px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+        
+        input[type=submit]:hover {
+          background-color: #45a049; 
+        }
+        
+        .container {
+          border-radius: 5px;
+          background-color: #788fba;
+          padding: 20px;
+        }
+        </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+				<a class="navbar-brand" href="#"></a>
+				<img src="/image/logo.png" alt="Logo" style="width:70px;">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				  <span class="navbar-toggler-icon"></span>
+				</button>
+			  
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				  <ul class="navbar-nav ml-auto">
+					<li class="nav-item active">
+					  <a class="nav-link" href="/meet/">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item active">
+						  <a class="nav-link" href="/meet/status/<%=user.id%>">Status <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item active">
+						  <a class="nav-link" href="/meet/list/<%=user.id%>">Appointment<span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item active">
+						  <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
+					</li>
+				   
+				</div>
+			  </nav>
+ 
+<h2 id="center"> PATIENT REGISTRATION FORM </h2>
+<hr>
+<form action="/meet/appointment/<%=id%>" method="POST">
+<div class="container">
+     <label for="fname">First Name</label>
+    <input type="text" id="fname" name="firstname" placeholder=" Your first name.." required>
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name.." required>
+<!-- 
+    <label for="dob">D.O.B</label><br>
+    <input type="date" id="lname" name="lastname" placeholder="Your last name.."><br> -->
+    <br>
+
+    <label for="age">age</label>
+    <input type="text" id="age" name="age" placeholder="enter your age " required>
+
+
+  <label for="mstatus">Marital Status</label><br>
+  <input type="radio" name="mstatus" value="Unmarried" checked> Unmarried<br>
+  <input type="radio" name="mstatus" value="Married"> Married<br>
+
+  <Br>
+
+    <label for="gname">Father/Guardian Name</label>
+    <input type="text" id="gname" name="fathername" placeholder=" Patient father/guardian name.." required>
+
+    <label for="gender">Gender</label><br>
+
+  <input type="radio" name="gender" value="male" checked> Male<br>
+  <input type="radio" name="gender" value="female"> Female<br>
+  <input type="radio" name="gender" value="other"> Other  <br>
+  <br>
+    <label for="doctor">Doctor's name </label>
+    <input type="text" id="fname" name="doctorname" readonly value="<%=doctor%>" >
+
+    <label for="date">your date preference to meet doctor</label><br>
+    <input type="date" id="date" name="date" placeholder=" enter date" required><br>
+
+    <br>
+    <label for="Paddress">Permanent Address</label>
+    <textarea id="Paddress" name="address" placeholder="address" rows="5" required></textarea>
+
+    <input type="submit" value="Submit">
+  </form>
+</div>
+<section>
+  
+  <% include footer.ejs %>
+
+</section>
+ <script src="js/jquery.js"></script>
+<script  src="js/bootstrap.min.js"></script>
+</body>
+</html>

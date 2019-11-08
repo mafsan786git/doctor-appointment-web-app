@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>doctors list</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/style2.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <a class="navbar-brand" href="#"></a>
+        <img src="/image/logo.png" alt="Logo" style="width:70px;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				  <span class="navbar-toggler-icon"></span>
+				</button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/meet/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/meet/status/<%=user.id %>">Status<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/meet/list/<%=user.id%>">Appointment<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
+                </li>
+
+        </div>
+    </nav>
+
+
+    <section>
+        <div class="container">
+            <form>
+                <div class="row">
+
+                    <div class="col-md-6 col-md-2">
+
+                    </div>
+                </div>
+            </form>
+            <h1 class="text-center text-capitalize pt-5"><strong>Status</strong></h1>
+            <hr>
+            <% if (mng.length > 0) {%>
+            <div class="row text-center mb-5">
+                <% pts.forEach((patient, index) => { %>
+                  <% for(var key in patient) { %>
+                    <% if(key == patient.length-1) { %>
+                      <% return ;%>
+                     <% } %>
+                <div class="col-4 mb-4" >
+                        <div class="card-body border border-primary" style="background-color: rgb(104, 98, 98);width: 22rem">
+                            <h4 class="card-title">Patient Name : &nbsp; <%= patient[key]['firstname'] %> <%= patient[key]['lastname'] %> </h4>
+                            <h4 class="card-title">Doctor :&nbsp;  <%= patient[patient.length-1]['doctorname'] %> </h4>
+                            <h4 class="card-title">Date :<%= patient[key]['date'] %></h4>
+                        </div>
+                </div>
+                <% } %>
+                <%})%>
+            </div>
+
+            <%} else {%>
+              <div class="box">
+                <h3><% include ./partials/messages.ejs %></h3>
+              </div>
+              <%}%>
+        </div>
+    </section>
+
+    <% include footer.ejs %>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
