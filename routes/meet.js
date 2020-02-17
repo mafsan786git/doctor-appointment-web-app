@@ -10,7 +10,7 @@ router.get('/',ensureAuthenticated,(req,res)=>{
     res.render('home',{
         user:req.user
     });
-});
+}); 
 
 router.get('/login',forwardAuthenticated,(req,res)=>{
     res.render('login'); 
@@ -28,7 +28,7 @@ router.get('/signup',forwardAuthenticated,(req,res)=>{
     res.render('signup'); 
 });
 
-router.post('/signup',ensureAuthenticated,(req,res)=>{
+router.post('/signup',(req,res)=>{
     const {email,password,cpassword} = req.body;
     const errors=[];
     if(password!=cpassword){
@@ -37,16 +37,16 @@ router.post('/signup',ensureAuthenticated,(req,res)=>{
     if(password.length < 6){
         errors.push({msg:'Password must be atleast 6 character'});
     }
-    if (errors.length>0) {
+    if (errors.length>0) { 
         res.render('signup',{
             errors,
         });  
     }else{
         var db = 'login';
-        var sql = `SELECT COUNT(*) AS cnt FROM ${db} WHERE email=?`;
+        var sql = `SELECT COUNT(*) AS cnt FROM login WHERE email=?`;
         pool.query(sql,email,(err,result)=>{
             if(err) throw err;
-            if (result[0].cnt) {
+            if (result[0].cnt){
                 errors.push({msg:'Email is already exists'});
                 res.render('signup',{
                     errors,
@@ -56,6 +56,7 @@ router.post('/signup',ensureAuthenticated,(req,res)=>{
                 var login = {
                     "email":email,
                     "password":req.body.password,
+                    "flag":0
                 };
                 bcrypt.genSalt(10,(err,salt)=>{
                     if(err) throw err;
@@ -66,8 +67,9 @@ router.post('/signup',ensureAuthenticated,(req,res)=>{
                         pool.query(sql,login,(err,result)=>{
                             if(err)
                                 throw err;
-                                req.flash('success_msg','You are succesfully registered now you can login');
-                                res.redirect('/meet/login');
+                            req.flash('success_msg','You are succesfully registered now you can login');
+                            console.log('inside insert into login');
+                            res.redirect('/meet/login');
                         });
                         
                     });
@@ -181,7 +183,7 @@ router.get('/status/:id',ensureAuthenticated,(req,res)=>{
     // var currentdate = d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
     // console.log(currentdate);
     const errors = [];
-    var sql = `SELECT patientid,doctorid,bookdate FROM ptdoctor WHERE bookdate  >=? AND loginid=?`;
+    var sql = `SELECT patientid,doctorid,appointment_date FROM ptdoctor WHERE appointment_date  >=? AND loginid=?`;
     pool.query(sql,[currentdate,loginid],(err,result)=>{
         if(err) throw err;
         if(!result.length){

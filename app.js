@@ -7,7 +7,7 @@ const flash = require('connect-flash');
 const expressLayouts = require('express-ejs-layouts');
 const app = express();
 
-//directory
+//directory 
 app.use(express.static(path.join((__dirname , 'public'))));
 
 // for body parser
@@ -45,9 +45,11 @@ app.use((req,res,next)=>{
 
 //bring all routes
 const meet = require('./routes/meet');
+// const dbmnp = require('./routes/dbmanipulation');
 
 //Routes
 app.use('/meet',meet);
+//app.use('/dbmnp',dbmnp);
 
 app.get('/logout',(req,res)=>{
     req.logOut();
