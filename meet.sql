@@ -36,7 +36,7 @@ CREATE TABLE `doctor` (
   `fee` varchar(100) NOT NULL,
   `address` varchar(250) NOT NULL,
   `current_number` int NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Dumping data for table `doctor`
@@ -104,7 +104,7 @@ CREATE TABLE `doctor_check` (
   `doctorid` int NOT NULL,
   `patientid` int NOT NULL,
   `checked_or_canceled` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- --------------------------------------------------------
 
@@ -117,7 +117,7 @@ CREATE TABLE `login` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
   `flag` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Dumping data for table `login`
@@ -137,7 +137,7 @@ CREATE TABLE `max_limit` (
   `id` int NOT NULL,
   `doctorid` int NOT NULL,
   `max_number` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Dumping data for table `max_limit`
@@ -202,15 +202,15 @@ INSERT INTO `max_limit` (`id`, `doctorid`, `max_number`) VALUES
 
 CREATE TABLE `patient` (
   `patientid` int NOT NULL,
-  `lastname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `firstname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `firstname` varchar(255) DEFAULT NULL,
   `gender` varchar(20) NOT NULL,
   `age` int NOT NULL,
   `mstatus` varchar(250) NOT NULL,
   `address` varchar(1000) NOT NULL,
   `date` varchar(250) NOT NULL,
   `loginid` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Dumping data for table `patient`
@@ -241,7 +241,7 @@ CREATE TABLE `ptdoctor` (
   `loginid` int NOT NULL,
   `appointment_date` varchar(30) NOT NULL,
   `appointment_number` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Indexes for dumped tables
