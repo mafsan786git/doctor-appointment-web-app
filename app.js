@@ -46,9 +46,11 @@ app.use((req,res,next)=>{
 //bring all routes
 const meet = require('./routes/meet');
 // const dbmnp = require('./routes/dbmanipulation');
+const doctor = require('./routes/doctor');
 
 //Routes
 app.use('/meet',meet);
+app.use('/doctor',doctor);
 //app.use('/dbmnp',dbmnp);
 
 app.get('/logout',(req,res)=>{

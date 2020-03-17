@@ -5,6 +5,7 @@ const async = require('async');
 const bcrypt = require('bcryptjs');
 const {ensureAuthenticated,forwardAuthenticated} = require('../config/auth');
 const pool = require('../config/database');
+const util = require('util');
 
 router.get('/',ensureAuthenticated,(req,res)=>{
     res.render('home',{
@@ -79,8 +80,13 @@ router.post('/signup',(req,res)=>{
     }
 });
 
+//doctor list
 
 router.get('/list/:id',ensureAuthenticated,(req,res)=>{
+    if(req.user.flag == 0)
+    {
+        res.send('inside flag 0 list');
+    }
     // console.log(req.query);
     var city = 'fgdfh';
     city = req.query.city;
@@ -93,7 +99,9 @@ router.get('/list/:id',ensureAuthenticated,(req,res)=>{
             if(err) throw err;
             res.render('doctorlist',{
                 user:req.user,
-                doctor:result
+                doctor:result,
+                city:city
+                
             });
         });
     }else{
@@ -104,7 +112,8 @@ router.get('/list/:id',ensureAuthenticated,(req,res)=>{
             if(err) throw err;
             res.render('doctorlist',{
                 user:req.user,
-                doctor:result
+                doctor:result,
+                city:city
             });
         });
     }
@@ -118,48 +127,12 @@ router.get('/appointment/:id',ensureAuthenticated,(req,res)=>{
         if(err) throw err;
         res.render('appointment',{
             user:req.user,
-            doctor:result[0].doctorname,
+            doctor:result[0],
             id
         });
     });
 });
 
-router.post('/appointment/:id',ensureAuthenticated,(req,res)=>{
-    // console.log(req.body);
-    var doctorid = req.params.id;
-    const {firstname,lastname,age,mstatus,gender,doctorname,date,address} = req.body;
-    var loginid = req.user.id;
-    // var d = new Date();
-    // var s = d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
-    // console.log(s);
-    const patient = {
-        lastname,
-        firstname,
-        gender,
-        age,
-        mstatus,
-        address,
-        date,
-        loginid
-    };
-    var sql = `INSERT INTO patient SET ?`;
-    pool.query(sql,patient,(err,result)=>{
-        if (err) throw err;
-        var patientid = result.insertId;
-        const ptdoctor = {
-            patientid,
-            doctorid,
-            bookdate:date,
-            loginid
-        };
-        // console.log(ptdoctor);
-        sql = `INSERT INTO ptdoctor SET ?`;
-        pool.query(sql,ptdoctor,(err,result)=>{
-            if(err) throw err;
-            res.redirect(`/meet/status/${loginid}`);
-        });
-    });    
-});
 
 function formatDate() {
     var d = new Date(),
@@ -175,6 +148,58 @@ function formatDate() {
     return [year, month, day].join('-');
 }
 
+router.post('/appointment/:id',ensureAuthenticated,(req,res)=>{
+    // console.log(req.body);
+    var doctorid = req.params.id;
+    const {firstname,lastname,age,mstatus,gender,doctorname,address} = req.body;
+    var loginid = req.user.id;
+    // var d = new Date();
+    // var s = d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+    // console.log(s);
+    var currentdate = formatDate();
+    const patient = {
+        lastname,
+        firstname,
+        gender,
+        age,
+        mstatus,
+        address,
+        date:currentdate,
+        loginid
+    };
+    var sql = `SELECT current_number FROM doctor where doctorid=?`;
+    pool.query(sql,doctorid,(err,result)=>{
+        if(err) throw err;
+        if (result[0].current_number == 50) {
+            req.flash('error_msg','Sorry seat is full for this doctor');
+            res.redirect(`meet/appointment/${loginid}`);
+        }else{
+            sql = `INSERT INTO patient SET ?`;
+            var appointment_number = result[0].current_number;
+            pool.query(sql,patient,(err,result)=>{
+                if (err) throw err;
+                var patientid = result.insertId;
+                const ptdoctor = {
+                    patientid,
+                    doctorid,
+                    loginid,
+                    appointment_date:currentdate,
+                    appointment_number
+                };
+                // console.log(ptdoctor);
+                sql = `INSERT INTO ptdoctor SET ?`;
+                pool.query(sql,ptdoctor,(err,result)=>{
+                    if(err) throw err;
+                    res.redirect(`/meet/status/${loginid}`);
+                });
+            });
+        }
+    }); 
+        
+});
+
+
+// STATUS OF CURRENT PATIENT
 router.get('/status/:id',ensureAuthenticated,(req,res)=>{
     var loginid = req.params.id;
     // var d = new Date();
@@ -214,19 +239,36 @@ router.get('/status/:id',ensureAuthenticated,(req,res)=>{
                 });
             },(err)=>{
                 if(err) throw err;
-                console.log(pts[0]);
-                console.log(pts[1]);
-                console.log(pts[2]);
-
+                console.log(pts);
                 res.render('status',{
                         user:req.user,
                         mng:result,
                         pts:pts,
-                        
-                        // dc:dc
                     });
             });
         }
+    });
+});
+
+
+//HISTORY OF TOTAL PATIENT
+//PRIVATE
+//GET
+
+router.get('/history/:id',ensureAuthenticated,(req,res)=>{
+    var id = req.params.id;
+    var currentdate = formatDate();
+
+    var sql = `SELECT * FROM patient WHERE loginid = ${id} AND date < ?`;
+    pool.query(sql,currentdate,(err,result)=>{
+        if(err) throw err;
+       // console.log('inside history')
+        // console.log(result);
+        //console.log(util.inspect(result, false, null, true /* enable colors */));
+        res.render('history',{
+            user:req.user,
+            result
+        });
     });
 });
 

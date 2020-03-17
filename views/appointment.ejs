@@ -16,7 +16,7 @@
     *{
       margin:0; padding:0; font-family: 'Josefin Sans', sans-serif;
     }
-        body {font-family: Arial, Helvetica, sans-serif;}
+        body {font-family: Arial, Helvetica, sans-serif;background-color: lightgray;}
         * {box-sizing: border-box;}
         #center
         {
@@ -48,6 +48,7 @@
         }
         
         .container {
+          width: 50%;
           border-radius: 5px;
           background-color: #788fba;
           padding: 20px;
@@ -91,10 +92,10 @@
   <input type="radio" name="gender" value="other"> Other  <br>
   <br>
     <label for="doctor">Doctor's name </label>
-    <input type="text" id="fname" name="doctorname" readonly value="<%=doctor%>" >
+    <input type="text" id="fname" name="doctorname" readonly value="<%=doctor.doctorname%>" >
 
-    <label for="date">your date preference to meet doctor</label><br>
-    <input type="date" id="date" name="date" placeholder=" enter date" required><br>
+    <label for="appointment">Current appointment number to meet doctor</label><br>
+    <input type="text" id="appointment" name="appointmentNumber" readonly value="<%=doctor.current_number + 1%>"><br>
 
     <br>
     <label for="Paddress">Permanent Address</label>

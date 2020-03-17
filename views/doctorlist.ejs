@@ -32,7 +32,12 @@
     <div class="col-md-6 col-md-2">
         
         <select class="form-control mr-2" id="category_id" name="city" required>
-            <option selected value="" >select an option</option>
+          <% if(typeof city== "undefined") {%>
+            <option selected value="">select an option</option>
+            <%} else {%>
+              <option selected value=""><%=city %></option>
+              
+              <%}%>
             <option value="kochi">kochi</option>
             <option value="Palakkad">Palakkad</option>
             <option value="Thrissur">thrissur</option>
@@ -60,9 +65,10 @@
           <div >
             <img class="card-img-top" src="/image/upload/<%=value.picid %>" style="width:250px;height: 200px;" alt="Card image">
             <div class="card-body">
-              <h4 class="card-title"><%=value.doctorname %></h4>
-              <h4 class="card-title"><%=value.location %></h4>
-              <p class="card-text"><%=value.specialization %><br><h3>Rs:<%=value.fee %></h3></p>
+              
+              <h4 class="card-title"><%=value.specialization %></h4>
+              <h6 class="card-text"><%=value.location%></h4>
+              <h6 class="card-title"><%=value.doctorname %></h4>
               <div class="container text-center">
                 <a href="/meet/appointment/<%=value.doctorid%>" class="btn btn-danger" class="btn btn-danger" role="button">Get Appointment</a>
               </div>
@@ -76,162 +82,6 @@
         </div>
         <%}%>
       </div>
-        <!-- <div class="col-lg-3 col-md-3 col-12">
-
-              <div class="card" style="width:250px">
-
-          <img class="card-img-top" src="/image/profile.jpg" style="width:200px" alt="Card image">
-          <div class="card-body">
-          <h4 class="card-title">Dr. Suraj P Haridas</h4>
-          <p class="card-text">General Medicine<br>MBBS/CDS<BR>Kochi<br><h3>2000/-</h3></p>
-          <div class="container text-center">
-         <a href="#" class="btn btn-danger" class="btn btn-danger" role="button" >Get Appointment</a>
-      </div>
-      </div>
-      </div>
-      </div> 
-
-        <div class="col-lg-3 col-md-3 col-12">
-
-        <div class="card" style="width:250px">
-
-          <img class="card-img-top" src="/image/profile.jpg" style="width:200px" alt="Card image">
-          <div class="card-body">
-          <h4 class="card-title">Dr. Baiju Senadhipan</h4>
-          <p class="card-text">Gastroenterology.<br>B.P.T <br>kochi<br><h3>1800/-</h3></p>
-          <div class="container text-center">
-         <a href="#" class="btn btn-danger" class="btn btn-danger" role="button" >Get Appointment</a>
-      </div>
-      </div>
-      </div>
-      </div> 
-
-        <div class="col-lg-3 col-md-3 col-12">
-
-        <div class="card" style="width:250px">
-          <img class="card-img-top" src="/image/profile.jpg" style="width:200px" alt="Card image">
-          <div class="card-body">
-          <h4 class="card-title">Dr. Mathews Jose,</h4>
-          <p class="card-text">Oncology-Medical<br> B.O.T<br>Kochi<br><br><h3>1700</h3></p>
-           <div class="container text-center">
-         <a href="#" class="btn btn-danger" class="btn btn-danger" role="button" >Get Appointment</a>
-      </div>
-      </div>
-      </div>
-      </div> 
- <div class="col-lg-3 col-md-3 col-12">
-
-               <div class="card" style="width:250px">
-
-         <img class="card-img-top" src="/image/profile.jpg" style="width:200px" alt="Card image">
-          <div class="card-body">
-          <h4 class="card-title">Dr. Anuja Varghese</h4>
-          <p class="card-text">Family Physician<br>Aluva<h3>5220/-</h3></p>
-          <div class="container text-center">
-         <a href="#" class="btn btn-danger" class="btn btn-danger" role="button" >Get Appointment</a>
-      </div>
-      </div>
-      </div>
-      </div> 
-
-      <div class="col-lg-3 col-md-3 col-12">
-
-        <div class="card" style="width:250px">
-          <img class="card-img-top" src="/image/profile.jpg" style="width:200px" alt="Card image">
-          <div class="card-body">
-          <h4 class="card-title">Dr. Shabeer M P</h4>
-          <p class="card-text">General Medicine<br>G.C.F<br>kochi<h3>1800/-</h3></p>
-           <div class="container text-center">
-         <a href="#" class="btn btn-danger" class="btn btn-danger" role="button" >Get Appointment</a>
-      </div>      </div>
-      </div>
-      </div> 
-       <div class="col-lg-3 col-md-3 col-12">
-
-        <div class="card" style="width:250px">
-          <img class="card-img-top" src="/image/profile.jpg" style="width:200px" alt="Card image">
-          <div class="card-body">
-          <h4 class="card-title">Dr. Shirly Edward</h4>
-          <p class="card-text">Oncology-Medical<br>F.C.D<br>
-            kochi<br><h3>2900/-</h3></p>
-          <div class="container text-center">
-         <a href="#" class="btn btn-danger" class="btn btn-danger" role="button" >Get Appointment</a>
-      </div>
-      </div>
-      </div>
-      </div> 
-
- <div class="col-lg-3 col-md-3 col-12">
-
-        <div class="card" style="width:250px">
-          <img class="card-img-top" src="/image/profile.jpg" style="width:200px" alt="Card image">
-          <div class="card-body">
-          <h4 class="card-title">Dr. Behju Balan</h4>
-          <p class="card-text">Dentistry.<br>C.D.D<br>kochi<br><h3>1700/-</h3></b></p>
-          <div class="container text-center">
-         <a href="#" class="btn btn-danger" class="btn btn-danger" role="button" >Get Appointment</a>
-      </div>
-      </div>
-      </div>
-      </div> 
- <div class="col-lg-3 col-md-3 col-12">
-
-        <div class="card" style="width:250px">
-          <img class="card-img-top" src="/image/profile.jpg" style="width:200px" alt="Card image">
-          <div class="card-body">
-          <h4 class="card-title">Dr. Anupama S</h4>
-          <p class="card-text">Neonatology<br>D.C.R<br><br>kochi<br><h3>9800/-</h3></b></p>
-        <div class="container text-center">
-         <a href="#" class="btn btn-danger" class="btn btn-danger" role="button" >Get Appointment</a>
-      </div>
-      </div>
-      </div>
-      </div> 
-
- <div class="col-lg-3 col-md-3 col-12">
-
-        <div class="card" style="width:250px">
-          <img class="card-img-top" src="/image/profile.jpg" style="width:200px" alt="Card image">
-          <div class="card-body">
-          <h4 class="card-title">Dr. Anup Das</h4>
-          <p class="card-text">Complementary / Alternative Medicine<br>MBBS/C.D.S<br>kochi<br><h3>1800/-</h3></p>
-         <div class="container text-center">
-         <a href="#" class="btn btn-danger" class="btn btn-danger" role="button" >Get Appointment</a>
-      </div>
-            </div>
-      </div>
-      </div> 
-
- <div class="col-lg-3 col-md-3 col-12">
-
-        <div class="card" style="width:250px">
-          <img class="card-img-top" src="/image/profile.jpg" style="width:200px" alt="Card image">
-          <div class="card-body">
-          <h4 class="card-title">John Doe</h4>
-          <p class="card-text">Gastroenterology<br>MBBS<br><br>kochi<br><h3>1800/-</h3></p>
-<div class="container text-center">
-   <a href="#" class="btn btn-danger" class="btn btn-danger" role="button" >Get Appointment</a>
-</div>
-      </div>
-      </div>
-      </div> 
-
- <div class="col-lg-3 col-md-3 col-12">
-
-        <div class="card" style="width:250px">
-          <img class="card-img-top" src="/image/profile.jpg" style="width:200px" alt="Card image">
-          <div class="card-body">
-          <h4 class="card-title">Dr. Anupama S</h4>
-          <p class="card-text">Obstetrics & Gynecology<br>C.D.S<br>Kochi<br>kochi<br><h3>1800/-</h3></p>
-         
-<div class="container text-center">
-   <a href="#" class="btn btn-danger" class="btn btn-danger" role="button" >Get Appointment</a>
-</div>
-      </div>
-      </div>
-      </div>  -->
-
-
 </section>
 
 

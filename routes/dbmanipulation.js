@@ -19,10 +19,10 @@
 //         pool.query(sql,maxlimit,(err,result)=>{
 //             if(err)
 //                 throw err;
-//             // else{
-//             //     console.log(`doctorid ${i} is inserted.`);
-//                 // count++;
-//             // }
+// else{
+//     console.log(`doctorid ${i} is inserted.`);
+// count++;
+// }
 //         });
 //     }
 

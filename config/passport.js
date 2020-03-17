@@ -47,7 +47,6 @@ module.exports = function (passport) {
     });
 
     //deserializeUser
-
     passport.deserializeUser((id,done)=>{
         var sql = 'select * from login where id = ?';
         pool.query(sql,id,(err,result)=>{
