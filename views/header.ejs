@@ -9,17 +9,27 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/meet/">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/meet/status/<%=user.id%>">Status <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/meet/history/<%=user.id%>">History <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/meet/list/<%=user.id%>">Appointment<span class="sr-only">(current)</span></a>
-            </li>
+            <% if(user.flag == 0) {%>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/meet/status/<%=user.id%>">Status <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/meet/history/<%=user.id%>">History <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/meet/list/<%=user.id%>">Appointment<span class="sr-only">(current)</span></a>
+                </li>
+            <%}else {%>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/doctor/status/<%=user.flag%>">Status <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/doctor/history/<%=user.flag%>">History <span class="sr-only">(current)</span></a>
+                </li>
+
+            <%}%>
             <li class="nav-item active">
                 <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
             </li>

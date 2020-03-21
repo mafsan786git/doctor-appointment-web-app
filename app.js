@@ -6,6 +6,7 @@ const path = require('path');
 const flash = require('connect-flash');
 const expressLayouts = require('express-ejs-layouts');
 const app = express();
+const {ensureAuthenticated,forwardAuthenticated} = require('./config/auth');
 
 //directory 
 app.use(express.static(path.join((__dirname , 'public'))));
@@ -48,10 +49,17 @@ const meet = require('./routes/meet');
 // const dbmnp = require('./routes/dbmanipulation');
 const doctor = require('./routes/doctor');
 
+
+app.get('/',ensureAuthenticated,(req,res)=>{
+    res.render('home',{
+        user:req.user
+    });
+}); 
+
 //Routes
 app.use('/meet',meet);
 app.use('/doctor',doctor);
-//app.use('/dbmnp',dbmnp);
+
 
 app.get('/logout',(req,res)=>{
     req.logOut();

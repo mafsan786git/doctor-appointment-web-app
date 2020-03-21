@@ -7,11 +7,7 @@ const {ensureAuthenticated,forwardAuthenticated} = require('../config/auth');
 const pool = require('../config/database');
 const util = require('util');
 
-router.get('/',ensureAuthenticated,(req,res)=>{
-    res.render('home',{
-        user:req.user
-    });
-}); 
+
 
 router.get('/login',forwardAuthenticated,(req,res)=>{
     res.render('login'); 
@@ -19,7 +15,7 @@ router.get('/login',forwardAuthenticated,(req,res)=>{
 
 router.post('/login',(req,res,next)=>{
     passport.authenticate('local',{
-        successRedirect:'/meet',
+        successRedirect:'/',
         failureRedirect:'/meet/login',
         failureFlash:true
     })(req,res,next);
@@ -72,7 +68,6 @@ router.post('/signup',(req,res)=>{
                             console.log('inside insert into login');
                             res.redirect('/meet/login');
                         });
-                        
                     });
                 });
             }
@@ -83,10 +78,6 @@ router.post('/signup',(req,res)=>{
 //doctor list
 
 router.get('/list/:id',ensureAuthenticated,(req,res)=>{
-    if(req.user.flag == 0)
-    {
-        res.send('inside flag 0 list');
-    }
     // console.log(req.query);
     var city = 'fgdfh';
     city = req.query.city;
@@ -217,6 +208,7 @@ router.get('/status/:id',ensureAuthenticated,(req,res)=>{
                 errors,
                 user:req.user,
                 mng:result,
+                f:"status"
             });
         }else{
             const pts = [];
@@ -244,32 +236,84 @@ router.get('/status/:id',ensureAuthenticated,(req,res)=>{
                         user:req.user,
                         mng:result,
                         pts:pts,
+                        f:"status"
                     });
             });
         }
     });
 });
 
+router.get('/history/:id',ensureAuthenticated,(req,res)=>{
+    var loginid = req.params.id;
+    // var d = new Date();
+    // console.log(d);
+    var currentdate = formatDate();
+    // var currentdate = d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+    // console.log(currentdate);
+    const errors = [];
+    var sql = `SELECT patientid,doctorid,appointment_date FROM ptdoctor WHERE appointment_date  <? AND loginid=?`;
+    pool.query(sql,[currentdate,loginid],(err,result)=>{
+        if(err) throw err;
+        if(!result.length){
+            errors.push({msg:'No appointment is availabe'});
+            res.render('status',{
+                errors,
+                user:req.user,
+                mng:result,
+                f:"history"
+            });
+        }else{
+            const pts = [];
+            async.forEachOf(result,(value,key,callback)=>{
+                var sql2 = `SELECT * FROM patient WHERE patientid = ?;SELECT doctorname FROM doctor WHERE doctorid = ?`;
+                pool.query(sql2,[value.patientid,value.doctorid],(err,row)=>{
+                if(!err)
+                {
+                    if(row.length > 0){
+                   
+                    row[0].push(row[1][0]);
+                        pts.push(row[0]);
+                    }
+
+                    callback(null);
+                }else{
+                    console.log('Error while performing inside patient ');
+                    callback(err);
+                }
+                });
+            },(err)=>{
+                if(err) throw err;
+                console.log(pts);
+                res.render('status',{
+                        user:req.user,
+                        mng:result,
+                        pts:pts,
+                        f:"history"
+                    });
+            });
+        }
+    });
+});
 
 //HISTORY OF TOTAL PATIENT
 //PRIVATE
 //GET
 
-router.get('/history/:id',ensureAuthenticated,(req,res)=>{
-    var id = req.params.id;
-    var currentdate = formatDate();
+// router.get('/histoy/:id',ensureAuthenticated,(req,res)=>{
+//     var id = req.params.id;
+//     var currentdate = formatDate();
 
-    var sql = `SELECT * FROM patient WHERE loginid = ${id} AND date < ?`;
-    pool.query(sql,currentdate,(err,result)=>{
-        if(err) throw err;
-       // console.log('inside history')
-        // console.log(result);
-        //console.log(util.inspect(result, false, null, true /* enable colors */));
-        res.render('history',{
-            user:req.user,
-            result
-        });
-    });
-});
+//     var sql = `SELECT * FROM patient WHERE loginid = ${id} AND date < ? `;
+//     pool.query(sql,currentdate,(err,result)=>{
+//         if(err) throw err;
+//        // console.log('inside history')
+//         // console.log(result);
+//         //console.log(util.inspect(result, false, null, true /* enable colors */));
+//         res.render('history',{
+//             user:req.user,
+//             result
+//         });
+//     });
+// });
 
 module.exports = router;

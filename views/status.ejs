@@ -21,19 +21,18 @@
 
 <body>
     <% include header.ejs%>
-
-
     <section>
         <div class="container">
             <form>
                 <div class="row">
-
-                    <div class="col-md-6 col-md-2">
-
-                    </div>
+                    <div class="col-md-6 col-md-2"></div>
                 </div>
             </form>
+            <% if (f ==  "status") {%>
             <h1 class="text-center text-capitalize pt-5"><strong>Status</strong></h1>
+            <%} else {%>
+                <h1 class="text-center text-capitalize pt-5"><strong>Hostory</strong></h1>
+            <% } %>
             <hr>
             <% if (mng.length > 0) {%>
             <div class="row text-center mb-5">
