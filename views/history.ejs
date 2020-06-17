@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>doctors list</title>
     <meta charset="utf-8">
@@ -22,44 +21,41 @@
 
 <body>
     <% include header.ejs%>
-
-
     <section>
         <div class="container">
             <form>
                 <div class="row">
-
-                    <div class="col-md-6 col-md-2">
-
-                    </div>
+                    <div class="col-md-6 col-md-2"></div>
                 </div>
             </form>
-            <h1 class="text-center text-capitalize pt-5"><strong>HISTORY</strong></h1>
+                <h1 class="text-center text-capitalize pt-5"><strong>History</strong></h1>
             <hr>
-            <% if (result.length > 0) {%>
-                <div class="row text-center mb-5">
-                <% result.forEach((value,index)=> {%>
-                    <div class="col-4 mb-4" >
-                        <div class="card-body border border-primary" style="background-color: rgb(219, 196, 196);width: 22rem">
-                            <h4 class="card-title">Patient Name : &nbsp; <%= value.firstname %> <%= value.lastname %> </h4>
-                            <h4 class="card-title">Gender :&nbsp;  <%= value.gender %> </h4>
-                            <h4 class="card-title">Age :&nbsp;&nbsp;&nbsp; <%= value.age %> </h4>
-                            <h4 class="card-title">Marital :&nbsp;  <%= value.mstatus %> </h4>
-                            <h4 class="card-title">Date :&nbsp;  <%= value.date %> </h4>
-                            <h4 class="card-title">Address:<%= value.address %></h4>
+            <% if (mng.length > 0) {%>
+            <div class="row text-center mb-5">
+                <% pts.forEach((patient, index) => { %>
+                  <% for(var key in patient) { %>
+                    <% if(key == patient.length-1) { %>
+                      <% return ;%>
+                     <% } %>
+                <div class="col-4 mb-4" >
+                        <div class="card-body border border-primary" style="background-color: rgb(104, 98, 98);width: 22rem">
+                            <h4 class="card-title">Patient Name : &nbsp; <%= patient[key]['firstname'] %> <%= patient[key]['lastname'] %> </h4>
+                            <h4 class="card-title">Doctor :&nbsp;  <%= patient[patient.length-1]['doctorname'] %> </h4>
+                            <h4 class="card-title">Date :<%= patient[key]['date'] %></h4>
                         </div>
                 </div>
+                <% } %>
                 <%})%>
-                <%} else {%>
-                  <div class="box">
-                    <h3><% include ./partials/messages.ejs %></h3>
-                  </div>
-                <%}%>
+            </div>
+
+            <%} else {%>
+              <div class="box">
+                <h3><% include ./partials/messages.ejs %></h3>
+              </div>
+              <%}%>
         </div>
     </section>
-
     <% include footer.ejs %>
-
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

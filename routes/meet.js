@@ -65,7 +65,7 @@ router.post('/signup',(req,res)=>{
                             if(err)
                                 throw err;
                             req.flash('success_msg','You are succesfully registered now you can login');
-                            console.log('inside insert into login');
+                            // console.log('inside insert into login');
                             res.redirect('/meet/login');
                         });
                     });
@@ -140,13 +140,9 @@ function formatDate() {
 }
 
 router.post('/appointment/:id',ensureAuthenticated,(req,res)=>{
-    // console.log(req.body);
     var doctorid = req.params.id;
     const {firstname,lastname,age,mstatus,gender,doctorname,address} = req.body;
     var loginid = req.user.id;
-    // var d = new Date();
-    // var s = d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
-    // console.log(s);
     var currentdate = formatDate();
     const patient = {
         lastname,
@@ -167,6 +163,8 @@ router.post('/appointment/:id',ensureAuthenticated,(req,res)=>{
         }else{
             sql = `INSERT INTO patient SET ?`;
             var appointment_number = result[0].current_number;
+            appointment_number = appointment_number+1;
+            
             pool.query(sql,patient,(err,result)=>{
                 if (err) throw err;
                 var patientid = result.insertId;
@@ -178,8 +176,14 @@ router.post('/appointment/:id',ensureAuthenticated,(req,res)=>{
                     appointment_number
                 };
                 // console.log(ptdoctor);
-                sql = `INSERT INTO ptdoctor SET ?`;
-                pool.query(sql,ptdoctor,(err,result)=>{
+                var doctorCheck = {
+                    doctorid,
+                    patientid,
+                    checked_or_canceled:0
+                };
+                
+                sql = `INSERT INTO ptdoctor SET ?;INSERT INTO doctor_check SET ?;UPDATE doctor SET current_number=? WHERE doctorid=?`;
+                pool.query(sql,[ptdoctor,doctorCheck,appointment_number,doctorid],(err,result)=>{
                     if(err) throw err;
                     res.redirect(`/meet/status/${loginid}`);
                 });
@@ -193,15 +197,14 @@ router.post('/appointment/:id',ensureAuthenticated,(req,res)=>{
 // STATUS OF CURRENT PATIENT
 router.get('/status/:id',ensureAuthenticated,(req,res)=>{
     var loginid = req.params.id;
-    // var d = new Date();
-    // console.log(d);
     var currentdate = formatDate();
-    // var currentdate = d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+    //var currentdate = d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
     // console.log(currentdate);
     const errors = [];
-    var sql = `SELECT patientid,doctorid,appointment_date FROM ptdoctor WHERE appointment_date  >=? AND loginid=?`;
+    var sql = `SELECT patientid,doctorid,appointment_date,appointment_number FROM ptdoctor WHERE appointment_date  >=? AND loginid=?`;
     pool.query(sql,[currentdate,loginid],(err,result)=>{
         if(err) throw err;
+        // console.log(result);
         if(!result.length){
             errors.push({msg:'No appointment is availabe'});
             res.render('status',{
@@ -213,12 +216,14 @@ router.get('/status/:id',ensureAuthenticated,(req,res)=>{
         }else{
             const pts = [];
             async.forEachOf(result,(value,key,callback)=>{
-                var sql2 = `SELECT * FROM patient WHERE patientid = ?;SELECT doctorname FROM doctor WHERE doctorid = ?`;
-                pool.query(sql2,[value.patientid,value.doctorid],(err,row)=>{
+                var sql2 = `SELECT * FROM patient WHERE patientid = ?;SELECT doctorname,fee,doctorid FROM doctor WHERE doctorid = ?;SELECT * FROM doctor_check WHERE doctorid=? and patientid=? `;
+                pool.query(sql2,[value.patientid,value.doctorid,value.doctorid,value.patientid],(err,row)=>{
                 if(!err)
                 {
-                    if(row.length > 0){
-                   
+                    if(row.length > 0 && row[2][0].checked_or_canceled === 0){
+                //    console.log('in meetjs status : ',row[1][0]);
+                    console.log(row[0][0]);
+                        row[0][0].appointment_number = value.appointment_number;
                     row[0].push(row[1][0]);
                         pts.push(row[0]);
                     }
@@ -231,7 +236,7 @@ router.get('/status/:id',ensureAuthenticated,(req,res)=>{
                 });
             },(err)=>{
                 if(err) throw err;
-                console.log(pts);
+                // console.log(pts);
                 res.render('status',{
                         user:req.user,
                         mng:result,
@@ -255,8 +260,8 @@ router.get('/history/:id',ensureAuthenticated,(req,res)=>{
     pool.query(sql,[currentdate,loginid],(err,result)=>{
         if(err) throw err;
         if(!result.length){
-            errors.push({msg:'No appointment is availabe'});
-            res.render('status',{
+            errors.push({msg:'No previous appointment is availabe'});
+            res.render('history',{
                 errors,
                 user:req.user,
                 mng:result,
@@ -283,8 +288,8 @@ router.get('/history/:id',ensureAuthenticated,(req,res)=>{
                 });
             },(err)=>{
                 if(err) throw err;
-                console.log(pts);
-                res.render('status',{
+                // console.log(pts);
+                res.render('history',{
                         user:req.user,
                         mng:result,
                         pts:pts,
@@ -295,25 +300,26 @@ router.get('/history/:id',ensureAuthenticated,(req,res)=>{
     });
 });
 
-//HISTORY OF TOTAL PATIENT
-//PRIVATE
-//GET
-
-// router.get('/histoy/:id',ensureAuthenticated,(req,res)=>{
-//     var id = req.params.id;
-//     var currentdate = formatDate();
-
-//     var sql = `SELECT * FROM patient WHERE loginid = ${id} AND date < ? `;
-//     pool.query(sql,currentdate,(err,result)=>{
-//         if(err) throw err;
-//        // console.log('inside history')
-//         // console.log(result);
-//         //console.log(util.inspect(result, false, null, true /* enable colors */));
-//         res.render('history',{
-//             user:req.user,
-//             result
-//         });
-//     });
-// });
+router.post('/cancel',(req,res)=>{
+    console.log(req.body);
+    var loginId = req.body.id;
+    var check = 1;
+    const {doctorid,patientid} = req.body;
+    var appointment_number = 1;
+    // console.log('doctorid : ',doctorid);
+    // console.log('patientid : ',patientid);
+    var sql = `UPDATE doctor_check SET checked_or_canceled=? WHERE doctorid=? AND patientid=?;DELETE FROM ptdoctor WHERE doctorid=? and patientid=?;UPDATE doctor SET current_number=current_number-${appointment_number} WHERE doctorid=?`;
+    pool.query(sql,[check,doctorid,patientid,doctorid,patientid,doctorid],(err,result)=>{
+        if(err) throw err;
+        if(req.user.flag === 0)
+        {
+            res.redirect(`/meet/status/${req.user.id}`);
+        }else{
+            res.redirect(`/doctor/status/${req.user.id}`);
+        }
+        
+        
+    });
+});
 
 module.exports = router;

@@ -91,8 +91,10 @@
   <input type="radio" name="gender" value="female"> Female<br>
   <input type="radio" name="gender" value="other"> Other  <br>
   <br>
-    <label for="doctor">Doctor's name </label>
-    <input type="text" id="fname" name="doctorname" readonly value="<%=doctor.doctorname%>" >
+    <label for="doctor">Doctor name </label>
+    <input type="text" id="fname" name="doctorname" readonly value="<%=doctor.doctorname%>" ><br>
+    <label for="doctor">Doctor Fees </label>
+    <input type="text" id="fname" name="doctorfee" readonly value="<%=doctor.fee%>">
 
     <label for="appointment">Current appointment number to meet doctor</label><br>
     <input type="text" id="appointment" name="appointmentNumber" readonly value="<%=doctor.current_number + 1%>"><br>

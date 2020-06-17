@@ -32,7 +32,7 @@
             <h1 class="text-center text-capitalize pt-5"><strong>Status</strong></h1>
             <%} else {%>
                 <h1 class="text-center text-capitalize pt-5"><strong>Hostory</strong></h1>
-            <% } %>
+            <% }%>
             <hr>
             <% if (mng.length > 0) {%>
             <div class="row text-center mb-5">
@@ -42,10 +42,18 @@
                       <% return ;%>
                      <% } %>
                 <div class="col-4 mb-4" >
-                        <div class="card-body border border-primary" style="background-color: rgb(104, 98, 98);width: 22rem">
+                        <div class="card-body border border-primary" style="background-color:lightgray;width: 22rem">
                             <h4 class="card-title">Patient Name : &nbsp; <%= patient[key]['firstname'] %> <%= patient[key]['lastname'] %> </h4>
                             <h4 class="card-title">Doctor :&nbsp;  <%= patient[patient.length-1]['doctorname'] %> </h4>
-                            <h4 class="card-title">Date :<%= patient[key]['date'] %></h4>
+                            <h4 class="card-title">Date : <%= patient[key]['date'] %></h4>
+                            <h4 class="card-title">Appoointment Number : <%= patient[key]['appointment_number'] %></h4>
+                            <h4 class="card-title">Fee : <%= patient[patient.length-1]['fee'] %></h4>
+                            <form action="/meet/cancel" method="POST">
+                                <input type="text" name="appointment_number" value="<%= patient[key]['appointment_number'] %>" hidden>
+                                <input type="text" name="doctorid" value="<%= patient[patient.length-1]['doctorid'] %>" hidden>
+                                <input type="text" name="patientid" value="<%= patient[key]['patientid'] %>" hidden>
+                               <button style="border: none;background-color: rgb(214, 82, 82);padding: 5px;border-radius: 5px;">Cancel</button>
+                            </form>
                         </div>
                 </div>
                 <% } %>
@@ -59,9 +67,7 @@
               <%}%>
         </div>
     </section>
-
     <% include footer.ejs %>
-
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
